@@ -1,6 +1,7 @@
 #include "../thread/threadJob.h"
 #include "../thread/threadManager.h"
 #include <unistd.h>
+#include <stdio.h>
 
 class CYJob : public Thread::threadJob    
 {  
@@ -27,7 +28,7 @@ int main()
 {
 	Thread::threadManager* manage = new Thread::threadManager(10);  
 
-	for(int i=0;i<40;i++)  
+	for(int i=0;i<1;i++)  
 	{  
 		CYJob * job = new CYJob();  
 		manage->Run(job,NULL);  

@@ -11,8 +11,6 @@ class thread
 		thread();
 		virtual ~thread();
 
-		static void* ThreadFunction(void *argv);
-
 		virtual void  Run(void)=0;
 
 		void setErrorCode(int error)

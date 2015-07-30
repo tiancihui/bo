@@ -10,7 +10,7 @@ INCLUDES = -I ./
 #SRCDIR =src/mysrcdir src/othersrc1 src/othersrc2
 SRCDIR = ./test ./util ./thread
 #LIBS = -Llib -lcurl -Llib -lmysqlclient -Llib -llog4cpp
-LIBS =
+LIBS = -lpthread
 
 C_SRCDIR = $(SRCDIR)
 C_SOURCES = $(foreach d,$(C_SRCDIR),$(wildcard $(d)/*.c) )
