@@ -32,7 +32,7 @@ namespace Common
 		struct timeval tv;
 		gettimeofday(&tv, NULL);
 		t=localtime(&(tv.tv_sec));
-		sprintf(timeStr,"%4dÄê%02dÔÂ%02dÈÕ %02d:%02d:%02d:%06ld",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec,tv.tv_usec);
+		sprintf(timeStr,"%4d-%02d-%02d %02d:%02d:%02d:%06ld",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec,tv.tv_usec);
 	}
 
 };

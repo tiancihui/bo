@@ -56,11 +56,12 @@ namespace Thread
 		for(unsigned int i=0; i< _workAllVec.size(); i++)
 		{
 		   threadWork* work = _workAllVec[i];
-		   work->Join();
+		   work->Stop();
 		}
 		
-//		_workBusyVec.clear();
-//		_workIdleVec.clear();
+		_workAllVec.clear();
+		_workBusyVec.clear();
+		_workIdleVec.clear();
 	}
 
 	void threadPool::__createIdleThread(int num)

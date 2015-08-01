@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#include "../util/Common_Time.h"
 typedef struct JobData
 {
     char message[1024];
@@ -40,12 +41,18 @@ int main(int argc, char* argv[])
 	sleep(2);  
 	for(int i=0;i<10000;i++)  
 	{  
+/*		
 		usleep(10);
 		JobData *data = new JobData();
 		memset(data->message,'0',1024);
         sprintf(data->message,"message %d",i);		
 		CYJob * job = new CYJob();  
 		manage->Run(job,data);  
+*/
+		sleep(1);
+		char buffer[1024];
+		Common::getCurStr(buffer);
+		printf("%s\r\n",buffer);
 	}  
 
     while(1)

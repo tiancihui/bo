@@ -1,8 +1,4 @@
 #include "thread.h"
-#include <pthread.h>
-#include <unistd.h>
-#include <stdio.h>
-#include "../util/Common_Time.h"
 
 namespace Thread
 {
@@ -23,29 +19,29 @@ namespace Thread
 
 	void thread::Start()
 	{
-        pthread_t tid;
 		pthread_attr_t attr;
 		pthread_attr_init(&attr); 
 		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED); 
-		if (pthread_create(&tid,&attr,thread::ThreadFunction,this)!=0) {
+		if (pthread_create(&_tid,&attr,thread::ThreadFunction,this)!=0) {
 			printf("Create thread error!\n");
 			return ;
-	}
-	}
-
-	void thread::Join()
-	{
-  
+		}
 	}
 
 	void thread::Stop()
 	{
+       pthread_cancel(_tid); 
+	   Join();
+	}
 
+	void thread::Join()
+	{
+       pthread_join(_tid,NULL);         
 	}
 
 	void thread::Exit()
 	{
-
+       pthread_exit(NULL);         
 	}
 
 	void thread::WakeUp()
