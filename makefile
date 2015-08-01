@@ -2,7 +2,7 @@ TARGET = main
 OBJ_PATH = objs
 
 CC = g++
-CFLAGS = -Wall -Werror -g
+CFLAGS = -Wall -Werror  -g -fPIC -DDEBUG -DGCC -DX86_64
 LINKFLAGS =
 
 #INCLUDES = -I include/myinclude -I include/otherinclude1 -I include/otherinclude2

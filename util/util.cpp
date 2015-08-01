@@ -1,14 +1,17 @@
 #include"util.h"
+#include <stdio.h>
 
 namespace Common
 {
 	MutexLock::MutexLock()
 	{
+//		printf("Construct %p\r\n",this);
 		pthread_mutex_init(&_mutex, NULL);
 	}
 
 	MutexLock::~MutexLock()
 	{
+//		printf("destory %p\r\n",this);
         pthread_mutex_destroy(&_mutex);
 //		pthread_mutex_destory(&_mutex);
 	}
@@ -18,13 +21,15 @@ namespace Common
 		return &_mutex;
 	}
 
-	void MutexLock::lock()
+	void MutexLock::lock(const char* debuginfo,int line)
 	{
+//		printf("lock %p  %s %d\r\n",this,debuginfo,line);
 		pthread_mutex_lock(&_mutex);
 	}
 
-	void MutexLock::unlock()
+	void MutexLock::unlock(const char* debuginfo,int line)
 	{
+//		printf("unlock %p  %s %d\r\n",this,debuginfo,line);
 		pthread_mutex_unlock(&_mutex);
 	}
 
@@ -33,12 +38,12 @@ namespace Common
 	GuardLock::GuardLock(MutexLock  *mutexLock)
 		:_mutexLock(mutexLock)
 	{
-		_mutexLock->lock();
+		_mutexLock->lock(__FUNCTION__,__LINE__);
 	}
 
 	GuardLock::~GuardLock()
 	{
-		_mutexLock->unlock();
+		_mutexLock->unlock(__FUNCTION__,__LINE__);
 	}
 
 	Condition::Condition(MutexLock &mutex)

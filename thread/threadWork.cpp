@@ -4,7 +4,7 @@ namespace Thread
 {
 
 	threadWork::threadWork(threadPool* pool)
-		: _pool(NULL),
+		: _pool(pool),
 		_job(NULL),
 		_argv(NULL),
      	_varMutex(),
@@ -29,8 +29,12 @@ namespace Thread
 	{
         for(;;)
 		{
+		  
+           _workMutex.lock(__FUNCTION__,__LINE__);
 		   while(_job == NULL)
+		   {
 			   _workCond.wait();
+		   }
 
 		   _job->Run(_argv);
 
@@ -38,19 +42,20 @@ namespace Thread
 		   _job = NULL;
 		   _pool->__busyMove2Idle(this);
 
-           _workMutex.unlock();
+           	_workMutex.unlock(__FUNCTION__,__LINE__);
 		}
 	}
 
 	void threadWork::setJob(threadJob* job, void* argv)
 	{
-        _varMutex.lock();
+        _varMutex.lock(__FUNCTION__,__LINE__);
 		_job = job;
 		_argv = argv;
 		_job->setWorkThread(this);
-        _varMutex.unlock();
+        _varMutex.unlock(__FUNCTION__,__LINE__);
         
 		_workCond.notify();
+        _workMutex.unlock(__FUNCTION__,__LINE__);
 
 	}
 

@@ -12,7 +12,7 @@ class thread
 		virtual ~thread();
 
 		virtual void  Run(void)=0;
-
+        static  void* ThreadFunction(void *argv);
 		void setErrorCode(int error)
 		{
 		   _error = error;

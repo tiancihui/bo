@@ -12,7 +12,7 @@ namespace Thread
 	class threadJob;
 	class threadWork;
 
-	class threadPool :public Common::MutexLock
+	class threadPool 
 	{
 		public:
 			threadPool(int num);

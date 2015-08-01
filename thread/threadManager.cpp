@@ -5,7 +5,7 @@
 namespace Thread
 {
 	threadManager::threadManager()
-		:_num(16)
+		:_num(10)
 	{
 	    _poll = new threadPool(_num);
 	}

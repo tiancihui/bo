@@ -19,9 +19,9 @@ namespace Common
 
 			pthread_mutex_t* getPthreadMutex();
 
-			void lock();
+			void lock(const char* debuginfo,int line);
 
-			void unlock();
+			void unlock(const char* debuginfo,int line);
 
 		private:
 			pthread_mutex_t _mutex;
