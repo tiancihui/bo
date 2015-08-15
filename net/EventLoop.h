@@ -1,59 +1,39 @@
 #ifndef __EVENTLOOP_H__
 #define __EVENTLOOP_H__
-#include "Reactor.h"
-
-#include  <unistd.h>
-#include  <sys/types.h>       /* basic system data types */
-#include  <sys/socket.h>      /* basic socket definitions */
-#include  <netinet/in.h>      /* sockaddr_in{} and other Internet defns */
-#include  <arpa/inet.h>       /* inet(3) functions */
-#include <sys/epoll.h> /* epoll function */
-#include <fcntl.h>     /* nonblocking */
-#include <sys/resource.h> /*setrlimit */
-
-#include <stdlib.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-
-#define MAXEPOLLSIZE 10000
+#include<vector>
+#include<EventHandle.h>
+using namespace std;
 
 namespace Net
 {
-enum EventType
-{
-   EventRead;
-   EventWrite;
-   EventError;
-};
-
-class EventLoop
-{
-	public:
-     EventLoop(Reactor* reactor);
-     virtual ~EventLoop();
-    
-
-	 bool registerEvent();
-	 bool unRegisterEvent();
-     
-	 void Loop(long time);
-
-	 bool getActivityEvent(EventMap& activityEvents,int num);
-	private:
-     Reactor* _reactor;
+	typedef unsigned int event_t;
+	typedef std::map<handle_t,EventHandle*> HandleMap;
+	typedef std::map<handle_t,event_t> EventMap;
 
 
-	 int    _epollFd;
-	 int    _fdNum;
-     struct epoll_event _ev;
-     struct epoll_event _events[MAXEPOLLSIZE];
-}
+	class DeMultiPlex;
+
+	class EventLoop
+	{
+		public:
+			EventLoop();
+			virtual ~EventLoop();
+
+			int registerHandle(EventHandle* handle, event_t event);
+			int removeHandle(EventHandle* handle);
+			void handleEvent();
+
+			void NotifyActivity(int num);
+
+		private:
+        
+	    DeMultiPlex *_deMultiPlex;
+        HandleMap  _handles;
+		EventMap   _events;
+
+	};
 
 };
+
+
 #endif
-
-
-
-
-
